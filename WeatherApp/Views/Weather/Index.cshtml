@@ -1,0 +1,93 @@
+﻿@model WeatherApp.Models.WeatherViewModel
+@{
+    Layout = null;
+
+    string bgClass = "bg-clear";
+
+    if (Model != null && !string.IsNullOrWhiteSpace(Model.Description))
+    {
+        var desc = Model.Description.ToLower();
+
+        if (desc.Contains("yağmur"))
+            bgClass = "bg-rain";
+        else if (desc.Contains("bulut") || desc.Contains("kapalı"))
+            bgClass = "bg-clouds";
+        else if (desc.Contains("kar"))
+            bgClass = "bg-snow";
+    }
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hava Durumu</title>
+    <link rel="stylesheet" href="/css/weather.css" />
+</head>
+
+<body>
+
+    <div class="weather-bg @bgClass">
+        <div class="weather-panel">
+
+            <div class="weather-title">Hava Durumu</div>
+            <div class="weather-subtitle">
+                Şehir girerek anlık hava bilgisini öğren
+            </div>
+
+            <form method="post" id="weatherForm">
+                <input type="text" name="city" placeholder="Örn: İstanbul" autocomplete="off" />
+                <button type="submit" id="submitBtn">
+                    <span class="btn-text">Hava Durumunu Getir</span>
+                    <span class="btn-spinner"></span>
+                </button>
+            </form>
+
+            @if (!string.IsNullOrWhiteSpace(Model?.ErrorMessage))
+            {
+                <div class="error-box">
+                    @Model.ErrorMessage
+                </div>
+            }
+
+            @if (Model != null && string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <div class="weather-result">
+                    <h3>@Model.City</h3>
+
+                    <img src="@($"https://openweathermap.org/img/wn/{Model.Icon}@2x.png")"
+                         alt="Hava durumu ikonu" />
+
+                    <p>@Model.Description</p>
+                    <p><strong>@Model.Temperature °C</strong></p>
+                    <p>Nem: @Model.Humidity%</p>
+                </div>
+            }
+
+            @if (Model?.Forecasts?.Any() == true)
+            {
+                <div class="forecast">
+                    @foreach (var day in Model.Forecasts)
+                    {
+                        <div class="forecast-item">
+                            <div class="forecast-date">@day.Date</div>
+                            <img src="@($"https://openweathermap.org/img/wn/{day.Icon}.png")" />
+                            <div class="forecast-temp">@day.Temp °C</div>
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <!-- ✅ TEK VE DOĞRU SCRIPT (BODY SONUNDA) -->
+    <script>
+        document.getElementById("weatherForm").addEventListener("submit", function () {
+            document.getElementById("submitBtn").classList.add("loading");
+        });
+    </script>
+
+</body>
+</html>

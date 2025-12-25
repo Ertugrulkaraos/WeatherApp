@@ -1,0 +1,204 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.weather-bg {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.weather-panel {
+    width: 100%;
+    max-width: 360px;
+    padding: 26px 24px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.weather-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.weather-subtitle {
+    font-size: 14px;
+    opacity: .85;
+    margin-bottom: 18px;
+}
+
+
+.weather-panel input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+.weather-panel button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+    .weather-panel button:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px rgba(0,0,0,.25);
+    }
+
+.weather-result {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(0,0,0,0.12);
+    text-align: center;
+}
+
+    .weather-result h3 {
+        margin-bottom: 8px;
+        font-size: 18px;
+    }
+
+    .weather-result img {
+        width: 80px;
+        margin: 6px 0;
+    }
+
+
+/* Duruma göre arka plan */
+.bg-clear {
+    background: linear-gradient(120deg, #2980b9, #6dd5fa);
+}
+
+.bg-clouds {
+    background: linear-gradient(120deg, #2c3e50, #bdc3c7);
+}
+
+.bg-rain {
+    background: linear-gradient(120deg, #373B44, #4286f4);
+}
+
+.bg-snow {
+    background: linear-gradient(120deg, #83a4d4, #b6fbff);
+}
+@media (max-width: 480px) {
+    .weather-panel {
+        padding: 22px 18px;
+    }
+
+    .weather-title {
+        font-size: 22px;
+    }
+}
+/* ===== 5 Günlük Tahmin ===== */
+
+.forecast {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+}
+
+.forecast::-webkit-scrollbar {
+    height: 6px;
+}
+.forecast::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+    border-radius: 6px;
+}
+
+.forecast-item {
+    min-width: 90px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 14px;
+    padding: 10px 8px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+}
+
+.forecast-date {
+    font-size: 12px;
+    opacity: .85;
+    margin-bottom: 4px;
+}
+
+.forecast-item img {
+    width: 36px;
+    margin: 6px auto;
+}
+
+.forecast-temp {
+    font-size: 13px;
+    font-weight: 600;
+}
+/* Sayfa yumuþak geçiþ */
+body {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#submitBtn {
+    position: relative;
+}
+
+.btn-spinner {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(0,0,0,0.3);
+    border-top: 3px solid #000;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.loading .btn-text {
+    opacity: 0.6;
+}
+
+.loading .btn-spinner {
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
